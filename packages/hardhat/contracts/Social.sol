@@ -20,7 +20,7 @@ contract Social {
     mapping(bytes32 => Post) public posts;
     bytes32[] public feed;
 
-    function addPost(string memory body) external {
+    function addPost(string calldata body) external {
         Post memory post = Post(head, body);
         bytes32 id = keccak256(abi.encodePacked(post.body, numPosts));
         posts[id] = post;
