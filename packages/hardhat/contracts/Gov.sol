@@ -1,9 +1,8 @@
 pragma solidity >=0.6.0 <0.7.0;
 
 import "hardhat/console.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Moderation {
+contract Gov {
     mapping(address => bool) public banned_users;
 
     modifier noBannedUsers(address user) {
@@ -11,7 +10,7 @@ contract Moderation {
         _;
     }
 
-    function ban(address user) private {
+    function ban(address user) internal {
         banned_users[user] = true;
     }
 }

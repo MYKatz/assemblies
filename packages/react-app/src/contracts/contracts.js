@@ -1,1 +1,1 @@
-module.exports = ["Social","YourContract"];
+module.exports = ["YourContract"];

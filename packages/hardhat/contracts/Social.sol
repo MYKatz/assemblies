@@ -1,10 +1,11 @@
 pragma solidity >=0.6.0 <0.7.0;
 
 import "hardhat/console.sol";
+import "./Gov.sol";
 
 //import "@openzeppelin/contracts/access/Ownable.sol"; //https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
-contract Social {
+contract Social is Gov {
     event AddPost(bytes32 head, uint256 num, string body);
 
     uint256 public numPosts = 0;
