@@ -17,7 +17,7 @@ import {
   useBalance,
   useExternalContractLoader,
 } from "./hooks";
-import { Header, Account, Faucet, Ramp, Contract, GasGauge } from "./components";
+import { Header, Account, Faucet, Ramp, Contract, GasGauge, Feed, Gov } from "./components";
 import { Transactor } from "./helpers";
 import { formatEther } from "@ethersproject/units";
 //import Hints from "./Hints";
@@ -145,6 +145,16 @@ function App(props) {
               Feed
             </Link>
           </Menu.Item>
+          <Menu.Item key="/gov">
+            <Link
+              onClick={() => {
+                setRoute("/gov");
+              }}
+              to="/gov"
+            >
+              Gov
+            </Link>
+          </Menu.Item>
           <Menu.Item key="/contract">
             <Link
               onClick={() => {
@@ -188,6 +198,24 @@ function App(props) {
         </Menu>
 
         <Switch>
+          <Route exact path="/">
+            <Feed
+              name="YourContract"
+              signer={userProvider.getSigner()}
+              provider={localProvider}
+              address={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
+          <Route exact path="/gov">
+            <Gov
+              name="YourContract"
+              signer={userProvider.getSigner()}
+              provider={localProvider}
+              userAddress={address}
+              blockExplorer={blockExplorer}
+            />
+          </Route>
           <Route exact path="/contract">
             {/*
                 🎛 this scaffolding is full of commonly used components
