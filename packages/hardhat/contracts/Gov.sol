@@ -48,7 +48,7 @@ contract Gov {
 
     function createBanProposal(address user) public {
         require(banProposals[user].addr == address(0));
-        uint256 voteThreshold = thresholdPct.mul(numUsers).div(100); // number of users required
+        uint256 voteThreshold = thresholdPct.mul(numUsers).div(100).add(1); // number of users required
         BanProposal memory proposal = BanProposal(
             user,
             voteThreshold,
