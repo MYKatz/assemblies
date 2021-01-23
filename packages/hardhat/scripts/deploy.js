@@ -8,10 +8,12 @@ const R = require("ramda");
 const main = async () => {
     console.log("\n\n 📡 Deploying...\n");
 
-    const yourContract = await deploy("YourContract"); // <-- add in constructor args like line 16 vvvv
+    const yourContract = await deploy("YourContract", [
+        "0x696956132EAc6ef63776c0ec4b6A1F80a206b919",
+    ]); // <-- add in constructor args like line 16
     // const exampleToken = await deploy("ExampleToken")
     // const examplePriceOracle = await deploy("ExamplePriceOracle")
-    // const smartContractWallet = await deploy("SmartContractWallet",[exampleToken.address,examplePriceOracle.address])
+    //const smartContractWallet = await deploy("SmartContractWallet",[exampleToken.address,examplePriceOracle.address])
 
     /*
    * If you want to send some ETH to a contract on deploy (make your constructor payable!)

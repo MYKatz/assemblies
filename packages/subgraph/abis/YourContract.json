@@ -1,35 +1,31 @@
 [
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "bytes32",
-        "name": "head",
-        "type": "bytes32"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "num",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "body",
-        "type": "string"
+        "internalType": "address",
+        "name": "gov",
+        "type": "address"
       }
     ],
-    "name": "AddPost",
-    "type": "event"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
     "inputs": [
       {
-        "internalType": "string",
+        "internalType": "bytes32",
+        "name": "parent",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "postType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
         "name": "body",
-        "type": "string"
+        "type": "bytes"
       }
     ],
     "name": "addPost",
@@ -41,119 +37,36 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "newGov",
         "type": "address"
       }
     ],
-    "name": "ban",
+    "name": "changeGovContract",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "banProposalAddresses",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "banProposals",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "threshold",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "yesVotes",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expires",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "createBanProposal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "feed",
-    "outputs": [
       {
         "internalType": "bytes32",
-        "name": "",
+        "name": "postId",
         "type": "bytes32"
       }
     ],
-    "stateMutability": "view",
+    "name": "deletePost",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "defendant",
-        "type": "address"
-      }
-    ],
-    "name": "hasUserVoted",
+    "inputs": [],
+    "name": "govContract",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "contract GovContract",
         "name": "",
-        "type": "bool"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -174,33 +87,7 @@
   },
   {
     "inputs": [],
-    "name": "numBanProposals",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "numPosts",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "numUsers",
     "outputs": [
       {
         "internalType": "uint256",
@@ -223,7 +110,7 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "sender",
+        "name": "author",
         "type": "address"
       },
       {
@@ -237,62 +124,51 @@
         "type": "bytes32"
       },
       {
-        "internalType": "string",
-        "name": "body",
-        "type": "string"
+        "internalType": "bytes32",
+        "name": "parent",
+        "type": "bytes32"
       },
       {
-        "internalType": "bool",
-        "name": "disputed",
-        "type": "bool"
+        "internalType": "bytes32",
+        "name": "children",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "enum Social.PostType",
+        "name": "postType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "thresholdPct",
-    "outputs": [
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "userState",
+    "name": "userPosts",
     "outputs": [
       {
-        "internalType": "uint8",
+        "internalType": "bytes32",
         "name": "",
-        "type": "uint8"
+        "type": "bytes32"
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "defendant",
-        "type": "address"
-      }
-    ],
-    "name": "voteToBan",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
