@@ -4,6 +4,10 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract Gov {
+
+}
+
+/* contract Gov {
     using SafeMath for uint256;
 
     uint256 public numUsers = 0;
@@ -84,3 +88,4 @@ contract Gov {
         return (banProposals[defendant].voted[user]);
     }
 }
+ */
