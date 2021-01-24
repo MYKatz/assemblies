@@ -19,6 +19,12 @@ abstract contract GovContract {
         bytes data; // arbitrary data
     }
 
+    function proposalCount() external returns (uint256) {
+        return proposals.length;
+    }
+
+    // These functions should be implemented in subcontract
+
     function onPost(
         address sender,
         bytes32 parent,
@@ -38,13 +44,19 @@ abstract contract GovContract {
         external
         virtual;
 
-    function voteYes(uint256 proposal) external virtual;
+    // Functions below here will likely be overridden
+    // No check for voter fraud in these implementations!
+    function voteYes(uint256 proposal) external {
+        proposals[proposal].yesVotes++;
+    }
 
-    function voteNo(uint256 proposal) external virtual;
-
-    function proposalCount() external virtual returns (int256);
+    function voteNo(uint256 proposal) external {
+        proposals[proposal].noVotes++;
+    }
 
     // Display arbitrary values in proposal body
     // Format: [key1]:[val1];[key2]:[val2]; ...
-    function proposalDisplay() external virtual view returns (string memory);
+    function proposalDisplay() external view returns (string memory) {
+        return "";
+    }
 }
