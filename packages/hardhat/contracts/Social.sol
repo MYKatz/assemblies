@@ -3,8 +3,6 @@ pragma solidity >=0.6.0 <0.7.0;
 import "hardhat/console.sol";
 import "./GovContract.sol";
 
-//import "@openzeppelin/contracts/access/Ownable.sol"; //https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
-
 contract Social {
     uint256 public numPosts = 0; // used as nonce - tracks number of posts (incl. comments)
     GovContract public govContract; // governance logic
