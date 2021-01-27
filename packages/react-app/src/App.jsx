@@ -17,11 +17,14 @@ import {
   useBalance,
   useExternalContractLoader,
 } from "./hooks";
-import { Header, Account, Faucet, Ramp, Contract, GasGauge, Feed, Gov } from "./components";
+import { Header, Faucet, Ramp, Contract, GasGauge, Feed, Gov } from "./components";
+import Account from "./customcomponents/Account";
 import { Transactor } from "./helpers";
 import { formatEther } from "@ethersproject/units";
 //import Hints from "./Hints";
 import { Hints, ExampleUI, Subgraph } from "./views";
+import Blockies from "react-blockies";
+
 /*
     Welcome to 🏗 scaffold-eth !
 
@@ -123,7 +126,7 @@ function App(props) {
     }
   }, [loadWeb3Modal]);
 
-  const [route, setRoute] = useState();
+  const [route, setRoute] = useState("");
   useEffect(() => {
     setRoute(window.location.pathname);
   }, [setRoute]);
@@ -136,7 +139,7 @@ function App(props) {
   const [menu3, setMenu3] = useState(false);
 
   return (
-    <>
+    <BrowserRouter>
       <div className="w-full h-full">
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
@@ -145,18 +148,38 @@ function App(props) {
               <span className="pt-4">Ecclesia</span>
             </div>
             <ul aria-orientation="vertical" className="bg-white rounded py-6">
-              <li className="pl-6 cursor-pointer text-white text-sm leading-3 tracking-normal pb-4 pt-5 bg-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <div className="flex items-center">Explore</div>
+              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                <Link
+                  className="flex items-center text-black"
+                  onClick={() => {
+                    setRoute("/explore");
+                  }}
+                  to="/explore"
+                >
+                  Explore
+                </Link>
               </li>
               <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <div className="flex items-center">
-                  <span className="ml-2">Governance</span>
-                </div>
+                <Link
+                  className="flex items-center text-black"
+                  onClick={() => {
+                    setRoute("/gov");
+                  }}
+                  to="/gov"
+                >
+                  Governance
+                </Link>
               </li>
               <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <div className="flex items-center">
-                  <span className="ml-2">Factory</span>
-                </div>
+                <Link
+                  className="flex items-center text-black"
+                  onClick={() => {
+                    setRoute("/factory");
+                  }}
+                  to="/factory"
+                >
+                  Factory
+                </Link>
               </li>
             </ul>
           </div>
@@ -203,7 +226,15 @@ function App(props) {
                       className="pl-6 cursor-pointer text-white text-sm leading-3 tracking-normal pb-4 pt-5 bg-indigo-700 focus:text-indigo-700 focus:outline-none"
                       onClick={() => setMenu(!menu)}
                     >
-                      <div className="flex items-center">Explore</div>
+                      <Link
+                        className="flex items-center"
+                        onClick={() => {
+                          setRoute("/explore");
+                        }}
+                        to="/explore"
+                      >
+                        Explore
+                      </Link>
                     </li>
                     <li
                       className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
@@ -219,21 +250,6 @@ function App(props) {
                     </li>
                   </ul>
                 </div>
-                <div className="w-full">
-                  <div className="flex justify-center mb-4 w-full px-6"></div>
-                  <div className="border-t border-gray-300">
-                    <div className="w-full flex items-center justify-between px-6 pt-1">
-                      <div className="flex items-center">
-                        <img
-                          alt="profile-pic"
-                          src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
-                          className="w-8 h-8 rounded-md"
-                        />
-                        <p className="md:text-xl text-gray-800 text-base leading-4 ml-2">Jane Doe</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -246,84 +262,19 @@ function App(props) {
                 <div className="w-1/2 h-full hidden lg:flex items-center pl-6 pr-24"></div>
                 <div className="w-1/2 hidden lg:flex">
                   <div className="w-full flex items-center pl-8 justify-end">
-                    <div className="flex items-center relative cursor-pointer" onClick={() => setProfile(!profile)}>
-                      <div className="rounded-full">
-                        {profile ? (
-                          <ul className="p-2 w-full border-r bg-white absolute rounded left-0 shadow mt-12 sm:mt-16 ">
-                            <li className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center">
-                              <div className="flex items-center">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="icon icon-tabler icon-tabler-user"
-                                  width={18}
-                                  height={18}
-                                  viewBox="0 0 24 24"
-                                  strokeWidth="1.5"
-                                  stroke="currentColor"
-                                  fill="none"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <path stroke="none" d="M0 0h24v24H0z" />
-                                  <circle cx={12} cy={7} r={4} />
-                                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                                </svg>
-                                <span className="text-sm ml-2">My Profile</span>
-                              </div>
-                            </li>
-                            <li className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center mt-2">
-                              <div className="flex items-center">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="icon icon-tabler icon-tabler-logout"
-                                  width={20}
-                                  height={20}
-                                  viewBox="0 0 24 24"
-                                  strokeWidth="1.5"
-                                  stroke="currentColor"
-                                  fill="none"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <path stroke="none" d="M0 0h24v24H0z" />
-                                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                                  <path d="M7 12h14l-3 -3m0 6l3 -3" />
-                                </svg>
-                                <span className="text-sm ml-2">Sign out</span>
-                              </div>
-                            </li>
-                          </ul>
-                        ) : (
-                          ""
-                        )}
-                        <div className="relative">
-                          <img
-                            className="rounded-full h-10 w-10 object-cover"
-                            src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
-                            alt="avatar"
-                          />
-                          <div className="w-2 h-2 rounded-full bg-green-400 border border-white absolute inset-0 mb-0 mr-0 m-auto" />
-                        </div>
-                      </div>
-                      <p className="text-gray-800 text-sm mx-3">Jane Doe</p>
-                      <div className="cursor-pointer text-gray-600">
-                        <svg
-                          aria-haspopup="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="icon icon-tabler icon-tabler-chevron-down"
-                          width={20}
-                          height={20}
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <polyline points="6 9 12 15 18 9" />
-                        </svg>
-                      </div>
+                    <div className="flex items-center relative cursor-pointer">
+                      <Blockies seed={address.toLowerCase()} size={8} scale={4} />
+                      <Account
+                        address={address}
+                        localProvider={localProvider}
+                        userProvider={userProvider}
+                        mainnetProvider={mainnetProvider}
+                        price={price}
+                        web3Modal={web3Modal}
+                        loadWeb3Modal={loadWeb3Modal}
+                        logoutOfWeb3Modal={logoutOfWeb3Modal}
+                        blockExplorer={blockExplorer}
+                      />
                     </div>
                   </div>
                 </div>
@@ -364,7 +315,7 @@ function App(props) {
           </div>
         </div>
       </div>
-    </>
+    </BrowserRouter>
   );
 }
 
