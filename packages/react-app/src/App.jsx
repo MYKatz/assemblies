@@ -234,7 +234,7 @@ function App(props) {
                         }}
                         to="/explore"
                       >
-                        Explore
+                        Home
                       </Link>
                     </li>
                     <li
@@ -310,11 +310,60 @@ function App(props) {
             <div className="container mx-auto py-10 h-64 md:w-4/5 w-11/12 px-6">
               {/* Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
               <div className="w-full h-full rounded">
-                <Main />
+                <Main
+                  name="YourContract"
+                  signer={userProvider.getSigner()}
+                  provider={localProvider}
+                  address={address}
+                  blockExplorer={blockExplorer}
+                />
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
+        <Row align="middle" gutter={[4, 4]}>
+          <Col span={8}>
+            <Ramp price={price} address={address} />
+          </Col>
+
+          <Col span={8} style={{ textAlign: "center", opacity: 0.8 }}>
+            <GasGauge gasPrice={gasPrice} />
+          </Col>
+          <Col span={8} style={{ textAlign: "center", opacity: 1 }}>
+            <Button
+              onClick={() => {
+                window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
+              }}
+              size="large"
+              shape="round"
+            >
+              <span style={{ marginRight: 8 }} role="img" aria-label="support">
+                💬
+              </span>
+              Support
+            </Button>
+          </Col>
+        </Row>
+
+        <Row align="middle" gutter={[4, 4]}>
+          <Col span={24}>
+            {
+              /*  if the local provider has a signer, let's show the faucet:  */
+              localProvider &&
+              localProvider.connection &&
+              localProvider.connection.url &&
+              localProvider.connection.url.indexOf("localhost") >= 0 &&
+              !process.env.REACT_APP_PROVIDER &&
+              price > 1 ? (
+                <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} />
+              ) : (
+                ""
+              )
+            }
+          </Col>
+        </Row>
       </div>
     </BrowserRouter>
   );
