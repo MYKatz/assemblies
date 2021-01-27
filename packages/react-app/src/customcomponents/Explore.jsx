@@ -3,19 +3,35 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Blockies from "react-blockies";
 import { Row, Col, Divider } from "antd";
-import tryToDisplay from "./utils";
-import FunctionForm from "./FunctionForm";
 
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
+const Post = ({ sender, body }) => {
+  return (
+    <figure class="md:flex bg-gray-100 rounded-xl p-8 md:p-0 mb-10 shadow-lg">
+      <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+        <blockquote>
+          <p class="text-lg font-semibold">{body}</p>
+        </blockquote>
+        <figcaption class="font-medium flex">
+          <div class="rounded-lg">
+            <Blockies seed={sender} size={8} scale={4} />
+          </div>
+          <div class="text-gray-500 self-end ml-2">{sender}</div>
+        </figcaption>
+      </div>
+    </figure>
+  );
+};
+
 const Feed = ({ headFn, postsFn, triggerRefresh, refreshRequired }) => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([1, 2, 3]);
 
   const refresh = useCallback(async () => {
     try {
       let curr = await headFn();
       let p = [];
-      for (var i = 0; i < 8; i++) {
+      for (var i = 0; i < 32; i++) {
         let post = await postsFn(curr);
         p.push(post);
         if (post.next == 0) break;
@@ -36,26 +52,7 @@ const Feed = ({ headFn, postsFn, triggerRefresh, refreshRequired }) => {
   return (
     <div>
       {posts.map(post => (
-        <figure class="md:flex bg-gray-100 rounded-xl p-8 md:p-0">
-            <img class="w-32 h-32 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" height="512">
-            <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-              <blockquote>
-                <p class="text-lg font-semibold">
-                  “Tailwind CSS is the only framework that I've seen scale
-                  on large teams. It’s easy to customize, adapts to any design,
-                  and the build size is tiny.”
-                </p>
-              </blockquote>
-              <figcaption class="font-medium">
-                <div class="text-cyan-600">
-                  Sarah Dayan
-                </div>
-                <div class="text-gray-500">
-                  Staff Engineer, Algolia
-                </div>
-              </figcaption>
-            </div>
-        </figure>
+        <Post sender={post.sender} body={post.body} />
       ))}
     </div>
   );
