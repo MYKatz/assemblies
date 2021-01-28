@@ -153,7 +153,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "proposal",
+        "type": "uint256"
+      }
+    ],
     "name": "proposalDisplay",
     "outputs": [
       {
@@ -198,6 +204,11 @@
       {
         "internalType": "uint256",
         "name": "noVotes",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "expiry",
         "type": "uint256"
       },
       {

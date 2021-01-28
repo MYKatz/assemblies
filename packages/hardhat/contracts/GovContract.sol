@@ -18,6 +18,7 @@ abstract contract GovContract {
         uint256 proposalType; // implementation dependent
         uint256 yesVotes;
         uint256 noVotes;
+        uint256 expiry;
         bool didPass;
         bytes data; // arbitrary data
     }
@@ -49,11 +50,11 @@ abstract contract GovContract {
 
     // Functions below here will likely be overridden
     // No check for voter fraud in these implementations!
-    function voteYes(uint256 proposal) external {
+    function voteYes(uint256 proposal) external virtual {
         proposals[proposal].yesVotes++;
     }
 
-    function voteNo(uint256 proposal) external {
+    function voteNo(uint256 proposal) external virtual {
         proposals[proposal].noVotes++;
     }
 
