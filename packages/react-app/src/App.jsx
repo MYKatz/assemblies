@@ -256,7 +256,7 @@ function App(props) {
           </div>
           {/*Mobile responsive sidebar*/}
           {/* Sidebar ends */}
-          <div className="w-full">
+          <div className="w-full overflow-scroll">
             {/* Navigation starts */}
             <nav className="h-16 flex items-center lg:items-stretch justify-end lg:justify-between bg-white shadow relative z-10">
               <div className="hidden lg:flex w-full pr-6">
@@ -328,22 +328,8 @@ function App(props) {
             <Ramp price={price} address={address} />
           </Col>
 
-          <Col span={8} style={{ textAlign: "center", opacity: 0.8 }}>
+          <Col span={8} style={{ textAlign: "center", opacity: 0.8, marginLeft: "20px" }}>
             <GasGauge gasPrice={gasPrice} />
-          </Col>
-          <Col span={8} style={{ textAlign: "center", opacity: 1 }}>
-            <Button
-              onClick={() => {
-                window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
-              }}
-              size="large"
-              shape="round"
-            >
-              <span style={{ marginRight: 8 }} role="img" aria-label="support">
-                💬
-              </span>
-              Support
-            </Button>
           </Col>
         </Row>
 
