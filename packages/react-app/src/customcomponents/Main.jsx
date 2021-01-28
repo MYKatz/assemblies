@@ -9,7 +9,7 @@ const Main = props => {
     <Switch>
       <Route path="/explore/:contractAddress?/:postId?" children={<Explore {...props} />}></Route>
       <Route exact path="/gov">
-        <Gov {...props} name="Dictatorship" />
+        <Gov {...props} name="Gerontocracy" />
       </Route>
       <Route exact path="/factory">
         Factory

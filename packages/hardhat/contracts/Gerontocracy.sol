@@ -22,7 +22,12 @@ contract Gerontocracy is GovContract {
     string[] public visibleFunctions = [
         "creationTime",
         "allowed",
-        "createBanProposal"
+        "createBanProposal",
+        "joinTime",
+        "banUser",
+        "proposals",
+        "voteYes",
+        "voteNo"
     ];
 
     constructor() public {
@@ -37,7 +42,7 @@ contract Gerontocracy is GovContract {
     ) external override {
         require(banned[sender] == false);
         if (joinTime[sender] == 0) {
-            joinTime[sender] == now;
+            joinTime[sender] = now;
             users[sender] = User(sender);
         }
     }
@@ -77,7 +82,7 @@ contract Gerontocracy is GovContract {
     function createBanProposal(address user) external {
         Proposal memory proposal = Proposal(
             msg.sender,
-            bytesToBytes32(abi.encodePacked(user), 0),
+            user,
             0, // type == 0
             0,
             0,
@@ -91,13 +96,22 @@ contract Gerontocracy is GovContract {
 
     function voteYes(uint256 proposal) external override {
         require(users[msg.sender].voted[proposal] == false);
+        require(joinTime[msg.sender] > 0);
         proposals[proposal].yesVotes += now - joinTime[msg.sender];
-        users[msg.sender].voted[proposal] == true;
+        users[msg.sender].voted[proposal] = true;
     }
 
     function voteNo(uint256 proposal) external override {
         require(users[msg.sender].voted[proposal] == false);
+        require(joinTime[msg.sender] > 0);
         proposals[proposal].noVotes += now - joinTime[msg.sender];
-        users[msg.sender].voted[proposal] == true;
+        users[msg.sender].voted[proposal] = true;
+    }
+
+    function banUser(uint256 proposal) external {
+        require(
+            proposals[proposal].expiry != 0 && proposals[proposal].expiry < now
+        );
+        banned[proposals[proposal].target] = true;
     }
 }

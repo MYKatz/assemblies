@@ -14,7 +14,7 @@ abstract contract GovContract {
 
     struct Proposal {
         address proposer;
-        bytes32 target; // address OR post (or something else?)
+        address target; // TODO: address OR post (or something else?)
         uint256 proposalType; // implementation dependent
         uint256 yesVotes;
         uint256 noVotes;
