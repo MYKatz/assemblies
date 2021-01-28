@@ -44,63 +44,11 @@ export default function Contract({
   show,
   price,
   blockExplorer,
+  displayedContractFunctions,
+  contract,
+  address,
+  contractIsDeployed,
 }) {
-  const [fNames, setFNames] = useState(new Set());
-  const contracts = useContractLoader(provider);
-  let contract;
-  if (!customContract) {
-    contract = contracts ? contracts[name] : "";
-  } else {
-    contract = customContract;
-  }
-
-  const address = contract ? contract.address : "";
-  const contractIsDeployed = useContractExistsAtAddress(provider, address);
-
-  let displayedContractFunctions = useMemo(
-    () =>
-      contract
-        ? Object.values(contract.interface.functions).filter(
-            fn => fn.type === "function" && !(show && show.indexOf(fn.name) < 0),
-          )
-        : [],
-    [contract, show],
-  );
-
-  console.log("display");
-  console.log(displayedContractFunctions);
-
-  const visibleFunctionExists = displayedContractFunctions.find(fn => fn.name === "visibleFunctions");
-
-  useEffect(() => {
-    async function getToken() {
-      if (visibleFunctionExists) {
-        let fN = new Set();
-        const visibleFunctions = contract["visibleFunctions"];
-        for (let i = 0; i < displayedContractFunctions.length; i++) {
-          try {
-            let name = await visibleFunctions(i);
-            if (!name) {
-              break;
-            }
-            fN.add(name);
-          } catch (err) {
-            console.log(err);
-            break;
-          }
-        }
-        setFNames(fN);
-      }
-    }
-    getToken();
-  }, [visibleFunctionExists]);
-
-  console.log(fNames);
-
-  if (fNames.size > 0) {
-    displayedContractFunctions = displayedContractFunctions.filter(fn => fNames.has(fn.name));
-  }
-
   const [refreshRequired, triggerRefresh] = useState(false);
   const contractDisplay = displayedContractFunctions.map(fn => {
     if (isQueryable(fn)) {
