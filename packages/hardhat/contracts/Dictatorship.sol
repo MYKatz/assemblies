@@ -6,7 +6,7 @@ import "./GovContract.sol";
 contract Dictatorship is GovContract {
     address public dictator;
 
-    mapping(address => bool) allowed; // allowed posters
+    mapping(address => bool) public allowed; // allowed posters
 
     string[] public visibleFunctions = ["allowed", "setAllowed"];
 
