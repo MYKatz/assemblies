@@ -9,6 +9,9 @@ abstract contract GovContract {
 
     Proposal[] public proposals;
 
+    // You should set a list of visible functions
+    // string[] public visibleFunctions = ["voteYes", "voteNo"];
+
     struct Proposal {
         address proposer;
         bytes32 target; // address OR post (or something else?)

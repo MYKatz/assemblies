@@ -8,6 +8,8 @@ contract Dictatorship is GovContract {
 
     mapping(address => bool) allowed; // allowed posters
 
+    string[] public visibleFunctions = ["allowed", "setAllowed"];
+
     constructor(string memory aCID, address owner) public {
         abiCID = aCID;
         dictator = owner;
@@ -38,5 +40,10 @@ contract Dictatorship is GovContract {
         override
     {
         require(sender == dictator);
+    }
+
+    function setAllowed(address user, bool canPost) external {
+        require(msg.sender == dictator);
+        allowed[user] = canPost;
     }
 }
