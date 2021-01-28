@@ -3,6 +3,16 @@ import ContractDisplay from "./Contract";
 
 import { useContractLoader, useContractExistsAtAddress } from "../../hooks";
 
+const parseDisplayString = displayString => {
+  let pairs = displayString.split(";");
+  let out = [];
+  for (let i = 0; i < pairs.length; i++) {
+    const p = pairs[i].split(":");
+    out.push(p);
+  }
+  return out;
+};
+
 export default function Contract({
   customContract,
   account,
@@ -15,6 +25,7 @@ export default function Contract({
   blockExplorer,
 }) {
   const [showContract, setShowContract] = useState(false);
+  const [proposals, setProposals] = useState([]);
 
   const [fNames, setFNames] = useState(new Set());
   const contracts = useContractLoader(provider);
@@ -75,6 +86,27 @@ export default function Contract({
     }
   }, [visibleFunctionExists, contract]);
 
+  useEffect(() => {
+    async function getProposals() {
+      const proposals = contract["proposals"];
+      const proposalDisplay = await contract["proposalDisplay"];
+      const numProposals = await contract["proposalCount"]();
+      const npValueNum = Number(numProposals.value);
+      let proposalObjects = [];
+      for (let i = npValueNum - 1; i > -1; i--) {
+        const p = await proposals(i);
+        const ds = await proposalDisplay(i);
+        const vals = parseDisplayString(ds);
+        proposalObjects.push({ proposal: p, vals: vals });
+      }
+      console.log("proposals", proposalObjects);
+      setProposals(proposalObjects);
+    }
+    if (visibleFunctionExists) {
+      getProposals();
+    }
+  }, [visibleFunctionExists, contract]);
+
   console.log(fNames);
 
   if (fNames.size > 0) {
@@ -82,20 +114,35 @@ export default function Contract({
   }
 
   return (
-    <ContractDisplay
-      displayedContractFunctions={displayedContractFunctions}
-      contract={contract}
-      address={address}
-      contractIsDeployed={contractIsDeployed}
-      customContract={customContract}
-      account={account}
-      gasPrice={gasPrice}
-      signer={signer}
-      provider={provider}
-      name={name}
-      show={show}
-      price={price}
-      blockExplorer={blockExplorer}
-    />
+    <div>
+      <div className="flex justify-end">
+        <button
+          className="rounded-md bg-gray-200 shadow-md p-4 outline-none focus:outline-none"
+          onClick={() => setShowContract(!showContract)}
+        >
+          Show Contract Functions
+        </button>
+      </div>
+      {showContract && (
+        <ContractDisplay
+          displayedContractFunctions={displayedContractFunctions}
+          contract={contract}
+          address={address}
+          contractIsDeployed={contractIsDeployed}
+          customContract={customContract}
+          account={account}
+          gasPrice={gasPrice}
+          signer={signer}
+          provider={provider}
+          name={name}
+          show={show}
+          price={price}
+          blockExplorer={blockExplorer}
+        />
+      )}
+      <div>
+        <div className="mx-4 text-xl">Proposals</div>
+      </div>
+    </div>
   );
 }

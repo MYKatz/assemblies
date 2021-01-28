@@ -59,7 +59,11 @@ abstract contract GovContract {
 
     // Display arbitrary values in proposal body
     // Format: [key1]:[val1];[key2]:[val2]; ...
-    function proposalDisplay() external view returns (string memory) {
+    function proposalDisplay(uint256 proposal)
+        external
+        view
+        returns (string memory)
+    {
         return "";
     }
 }
