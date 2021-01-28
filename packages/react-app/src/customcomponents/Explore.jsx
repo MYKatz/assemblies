@@ -59,6 +59,13 @@ const Feed = ({ headFn, postsFn, triggerRefresh, refreshRequired }) => {
     refresh();
   }, [refresh]);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      refresh();
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div>
       {contractAddress}
