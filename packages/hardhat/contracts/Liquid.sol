@@ -5,10 +5,10 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "./GovContract.sol";
 
 /**
-  "Plutocracy" contract
-  - "Voting power" equal to how many units of 0.00001 ethereum a user has sent
+  (Semi-) liquid democracy (ish)
+  - Users can delegate voting power to another
  */
-contract Plutocracy is GovContract {
+contract Liquid is GovContract {
     using Strings for uint256;
 
     uint256 public creationTime;
@@ -17,6 +17,7 @@ contract Plutocracy is GovContract {
 
     struct User {
         address addr;
+        address delegatee;
         mapping(uint256 => bool) voted;
     }
 
@@ -26,7 +27,7 @@ contract Plutocracy is GovContract {
         "createBanProposal",
         "banUser",
         "proposals",
-        "buyPower"
+        "power"
     ];
 
     constructor() public {
@@ -40,8 +41,8 @@ contract Plutocracy is GovContract {
         bytes calldata data
     ) external override {
         require(banned[sender] == false);
-        if(users[sender].address == address(0)){
-          users[sender] = User(sender);
+        if (users[sender].addr == address(0)) {
+            users[sender] = User(sender, sender);
         }
     }
 
@@ -92,8 +93,10 @@ contract Plutocracy is GovContract {
         proposals.push(proposal);
     }
 
-    function buyPower() external payable {
-        power[msg.sender] += msg.value / 10000000000000;
+    function delegate(address representative) external {
+        power[users[msg.sender].delegatee] -= 1;
+        power[representative] += 1;
+        users[msg.sender].delegatee = representative;
     }
 
     function voteYes(uint256 proposal) external override {
