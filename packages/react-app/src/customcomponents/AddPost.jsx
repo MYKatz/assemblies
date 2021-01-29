@@ -51,46 +51,49 @@ const AddPost = ({ contractFunction, functionInfo, provider, gasPrice, triggerRe
 
   inputs.push(
     <div className="py-2 md:w-4/5 w-11/12 px-6" key={"goButton"}>
-      <div
-        type="default"
-        onClick={async () => {
-          let innerIndex = 0;
+      <div type="default">
+        <Button
+          onClick={async () => {
+            let innerIndex = 0;
 
-          let body;
+            let body;
 
-          if (utils.isHexString(form)) {
-            const formUpdate = utils.toUtf8String(form);
-            body = formUpdate;
-          } else {
-            const formUpdate = utils.hexlify(utils.toUtf8Bytes(form));
-            body = formUpdate;
-          }
-
-          if (!body) return;
-
-          const args = [parent, postType, body];
-
-          let result;
-          if (functionInfo.stateMutability === "view" || functionInfo.stateMutability === "pure") {
-            const returned = await contractFunction(...args);
-            result = tryToDisplay(returned);
-          } else {
-            const overrides = {};
-            if (txValue) {
-              overrides.value = txValue; // ethers.utils.parseEther()
+            if (utils.isHexString(form)) {
+              const formUpdate = utils.toUtf8String(form);
+              body = formUpdate;
+            } else {
+              const formUpdate = utils.hexlify(utils.toUtf8Bytes(form));
+              body = formUpdate;
             }
 
-            // console.log("Running with extras",extras)
-            const returned = await tx(contractFunction(...args, overrides));
-            result = tryToDisplay(returned);
-          }
+            if (!form) return;
 
-          console.log("SETTING RESULT:", result);
-          setForm("");
-          triggerRefresh(true);
-        }}
-      >
-        {buttonIcon}
+            const args = [parent, postType, body];
+
+            let result;
+            if (functionInfo.stateMutability === "view" || functionInfo.stateMutability === "pure") {
+              const returned = await contractFunction(...args);
+              result = tryToDisplay(returned);
+            } else {
+              const overrides = {};
+              if (txValue) {
+                overrides.value = txValue; // ethers.utils.parseEther()
+              }
+
+              // console.log("Running with extras",extras)
+              const returned = await tx(contractFunction(...args, overrides));
+              result = tryToDisplay(returned);
+            }
+
+            console.log("SETTING RESULT:", result);
+            setForm("");
+            triggerRefresh(true);
+          }}
+          style={{ marginLeft: -32 }}
+        >
+          Post
+        </Button>
+        ;
       </div>
     </div>,
   );

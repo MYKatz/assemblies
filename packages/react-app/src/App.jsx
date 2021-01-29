@@ -146,7 +146,7 @@ function App(props) {
           {/* Sidebar starts */}
           <div className="absolute lg:relative w-64 h-screen shadow bg-white hidden lg:block">
             <div className="h-16 w-full flex items-center px-8 font-mono text-2xl">
-              <span className="pt-4">Ecclesia</span>
+              <span className="pt-4">Assembly</span>
             </div>
             <ul aria-orientation="vertical" className="bg-white rounded py-6">
               <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
@@ -157,7 +157,7 @@ function App(props) {
                   }}
                   to="/explore"
                 >
-                  Explore
+                  Home
                 </Link>
               </li>
               <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
@@ -171,17 +171,7 @@ function App(props) {
                   Governance
                 </Link>
               </li>
-              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <Link
-                  className="flex items-center text-black"
-                  onClick={() => {
-                    setRoute("/factory");
-                  }}
-                  to="/factory"
-                >
-                  Factory
-                </Link>
-              </li>
+              <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"></li>
             </ul>
           </div>
           {/*Mobile responsive sidebar*/}
@@ -198,7 +188,7 @@ function App(props) {
               <div className="flex flex-col justify-between h-full w-full">
                 <div>
                   <div className="flex items-center justify-between px-8">
-                    <div className="h-16 w-full flex items-center pt-8">Ecclesia</div>
+                    <div className="h-16 w-full flex items-center pt-8">Assembly</div>
                     <div
                       id="closeSideBar"
                       className="flex items-center justify-center h-10 w-10"

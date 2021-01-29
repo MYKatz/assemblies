@@ -6,7 +6,7 @@ import "./GovContract.sol";
 
 /**
   "Plutocracy" contract
-  - "Voting power" equal to how much wei a user has sent to the contract / 10000000000000
+  - "Voting power" equal to how many units of 0.00001 ethereum a user has sent
  */
 contract Plutocracy is GovContract {
     using Strings for uint256;

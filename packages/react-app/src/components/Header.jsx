@@ -20,7 +20,7 @@ export default function Header({ setRoute }) {
           >
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
           </svg>
-          <span className="ml-3 text-xl">Ecclesia</span>
+          <span className="ml-3 text-xl">Assembly</span>
         </a>
         <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0"></div>
       </div>
