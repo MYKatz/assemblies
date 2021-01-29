@@ -90,8 +90,7 @@ export default function Contract({
     async function getProposals() {
       const proposals = contract["proposals"];
       const proposalDisplay = await contract["proposalDisplay"];
-      const numProposals = await contract["proposalCount"]();
-      const npValueNum = Number(numProposals.value);
+      const npValueNum = await contract["proposalCount"]();
       let proposalObjects = [];
       for (let i = npValueNum - 1; i > -1; i--) {
         const p = await proposals(i);

@@ -23,7 +23,7 @@ abstract contract GovContract {
         bytes data; // arbitrary data
     }
 
-    function proposalCount() external returns (uint256) {
+    function proposalCount() public view returns (uint256) {
         return proposals.length;
     }
 

@@ -27,7 +27,8 @@ contract Gerontocracy is GovContract {
         "banUser",
         "proposals",
         "voteYes",
-        "voteNo"
+        "voteNo",
+        "proposalCount"
     ];
 
     constructor() public {
