@@ -6,6 +6,7 @@ import "./GovContract.sol";
 /**
   Dictatorship contract
   - No users (except the 'dictator') are allowed to post unless allowed to
+  - The dictator may decide to allow other users to post
  */
 contract Dictatorship is GovContract {
     address public dictator;

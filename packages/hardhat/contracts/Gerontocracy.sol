@@ -4,6 +4,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./GovContract.sol";
 
+/**
+  "Gerontocracy" contract
+  - "Voting power" equal to how long a user has been part of the platform
+ */
 contract Gerontocracy is GovContract {
     using Strings for uint256;
 
@@ -98,6 +102,7 @@ contract Gerontocracy is GovContract {
     function voteYes(uint256 proposal) external override {
         require(users[msg.sender].voted[proposal] == false);
         require(joinTime[msg.sender] > 0);
+        require(proposals[proposal].expiry >= now);
         proposals[proposal].yesVotes += now - joinTime[msg.sender];
         users[msg.sender].voted[proposal] = true;
     }
@@ -105,6 +110,7 @@ contract Gerontocracy is GovContract {
     function voteNo(uint256 proposal) external override {
         require(users[msg.sender].voted[proposal] == false);
         require(joinTime[msg.sender] > 0);
+        require(proposals[proposal].expiry >= now);
         proposals[proposal].noVotes += now - joinTime[msg.sender];
         users[msg.sender].voted[proposal] = true;
     }

@@ -18,12 +18,14 @@ const parseDisplayString = displayString => {
   return out;
 };
 
-const Proposal = ({ i, proposer, target, yesPower, noPower, voteYes, voteNo, deets }) => {
+const Proposal = ({ i, proposer, target, yesPower, noPower, voteYes, voteNo, deets, expiry }) => {
   console.log(yesPower);
   const total = yesPower + noPower;
   let percent = Math.round((yesPower * 100) / total);
 
   if (Number.isNaN(percent)) percent = 0;
+
+  console.log("EXPIRY", expiry);
 
   return (
     <figure class="bg-gray-100 rounded-xl p-8 md:p-0 mb-10 shadow-lg">
@@ -35,6 +37,7 @@ const Proposal = ({ i, proposer, target, yesPower, noPower, voteYes, voteNo, dee
       <div className="text-center pt-1 text-gray-500 text-sm">
         {yesPower}/{total}
       </div>
+      <div className="text-center pt-1 text-gray-500 text-sm">expires {format(expiry * 1000, "en_US")}</div>
       <div className="text-center pt-2">
         {deets.map(pair => {
           if (pair[0]) {
@@ -223,6 +226,7 @@ export default function Contract({
               noPower={Number(proposal.proposal.noVotes)}
               i={proposal.index}
               deets={proposal.vals}
+              expiry={Number(proposal.proposal.expiry)}
               voteYes={() => {
                 tx(voteYes(proposal.index));
                 setRefreshCounter(refreshCounter + 1);
