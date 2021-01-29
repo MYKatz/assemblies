@@ -32,6 +32,9 @@ const Proposal = ({ i, proposer, target, yesPower, noPower, voteYes, voteNo }) =
         <Blockies className="ml-2" seed={target.toLowerCase()} size={8} scale={4} /> {target}
       </div>
       <div className="text-center pt-4 text-xl">{percent}% yes</div>
+      <div className="text-center pt-1 text-gray-500 text-sm">
+        {yesPower}/{total}
+      </div>
       <div class="text-center pt-4">
         <Button className="mx-4" onClick={voteYes}>
           Vote Yes
@@ -70,6 +73,7 @@ export default function Contract({
   const tx = Transactor(provider, gasPrice);
   const [showContract, setShowContract] = useState(false);
   const [proposals, setProposals] = useState([]);
+  const [refreshCounter, setRefreshCounter] = useState(0);
 
   const [fNames, setFNames] = useState(new Set());
   const contracts = useContractLoader(provider);
@@ -135,7 +139,7 @@ export default function Contract({
     if (visibleFunctionExists) {
       getToken();
     }
-  }, [visibleFunctionExists, contract]);
+  }, [visibleFunctionExists, contract, refreshCounter]);
 
   useEffect(() => {
     async function getProposals() {
@@ -155,7 +159,14 @@ export default function Contract({
     if (visibleFunctionExists) {
       getProposals();
     }
-  }, [visibleFunctionExists, contract]);
+  }, [visibleFunctionExists, contract, refreshCounter]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRefreshCounter(refreshCounter + 1);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   console.log(fNames);
 
@@ -200,8 +211,14 @@ export default function Contract({
               yesPower={Number(proposal.proposal.yesVotes)}
               noPower={Number(proposal.proposal.noVotes)}
               i={proposal.index}
-              voteYes={() => tx(voteYes(proposal.index))}
-              voteNo={() => tx(voteNo(proposal.index))}
+              voteYes={() => {
+                tx(voteYes(proposal.index));
+                setRefreshCounter(refreshCounter + 1);
+              }}
+              voteNo={() => {
+                tx(voteNo(proposal.index));
+                setRefreshCounter(refreshCounter + 1);
+              }}
             />
           ))}
         </div>
