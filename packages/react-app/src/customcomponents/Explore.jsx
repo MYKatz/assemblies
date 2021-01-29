@@ -23,7 +23,7 @@ const Post = ({ sender, body }) => {
         </blockquote>
         <figcaption class="font-medium flex">
           <div class="rounded-lg">
-            <Blockies seed={sender} size={8} scale={4} />
+            <Blockies seed={sender.toLowerCase()} size={8} scale={4} />
           </div>
           <div class="text-gray-500 self-end ml-2">{sender}</div>
         </figcaption>

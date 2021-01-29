@@ -8,7 +8,7 @@ const R = require("ramda");
 const main = async () => {
     console.log("\n\n 📡 Deploying...\n");
 
-    const gov = await deploy("Gerontocracy");
+    const gov = await deploy("Plutocracy");
 
     const yourContract = await deploy("YourContract", [gov.address]); // <-- add in constructor args like line 16
     // const exampleToken = await deploy("ExampleToken")
