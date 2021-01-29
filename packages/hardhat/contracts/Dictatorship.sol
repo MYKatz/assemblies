@@ -3,6 +3,10 @@ pragma solidity >=0.6.0 <0.7.0;
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./GovContract.sol";
 
+/**
+  Dictatorship contract
+  - No users (except the 'dictator') are allowed to post unless allowed to
+ */
 contract Dictatorship is GovContract {
     address public dictator;
 

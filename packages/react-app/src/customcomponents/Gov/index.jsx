@@ -18,7 +18,7 @@ const parseDisplayString = displayString => {
   return out;
 };
 
-const Proposal = ({ i, proposer, target, yesPower, noPower, voteYes, voteNo }) => {
+const Proposal = ({ i, proposer, target, yesPower, noPower, voteYes, voteNo, deets }) => {
   console.log(yesPower);
   const total = yesPower + noPower;
   let percent = Math.round((yesPower * 100) / total);
@@ -34,6 +34,17 @@ const Proposal = ({ i, proposer, target, yesPower, noPower, voteYes, voteNo }) =
       <div className="text-center pt-4 text-xl">{percent}% yes</div>
       <div className="text-center pt-1 text-gray-500 text-sm">
         {yesPower}/{total}
+      </div>
+      <div className="text-center pt-2">
+        {deets.map(pair => {
+          if (pair[0]) {
+            return (
+              <div>
+                {pair[0]}:{pair[1]}
+              </div>
+            );
+          }
+        })}
       </div>
       <div class="text-center pt-4">
         <Button className="mx-4" onClick={voteYes}>
@@ -211,6 +222,7 @@ export default function Contract({
               yesPower={Number(proposal.proposal.yesVotes)}
               noPower={Number(proposal.proposal.noVotes)}
               i={proposal.index}
+              deets={proposal.vals}
               voteYes={() => {
                 tx(voteYes(proposal.index));
                 setRefreshCounter(refreshCounter + 1);
