@@ -40,8 +40,8 @@ contract Plutocracy is GovContract {
         bytes calldata data
     ) external override {
         require(banned[sender] == false);
-        if(users[sender].address == address(0)){
-          users[sender] = User(sender);
+        if (users[sender].addr == address(0)) {
+            users[sender] = User(sender);
         }
     }
 

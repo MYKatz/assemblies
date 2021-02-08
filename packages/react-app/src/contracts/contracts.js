@@ -1,1 +1,1 @@
-module.exports = ["Dictatorship","Gerontocracy","Plutocracy","YourContract"];
+module.exports = ["Dictatorship","Gerontocracy","Liquid","Plutocracy","YourContract"];

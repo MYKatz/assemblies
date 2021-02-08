@@ -27,7 +27,8 @@ contract Liquid is GovContract {
         "createBanProposal",
         "banUser",
         "proposals",
-        "power"
+        "power",
+        "delegate"
     ];
 
     constructor() public {
@@ -43,6 +44,7 @@ contract Liquid is GovContract {
         require(banned[sender] == false);
         if (users[sender].addr == address(0)) {
             users[sender] = User(sender, sender);
+            power[sender] = 1;
         }
     }
 
